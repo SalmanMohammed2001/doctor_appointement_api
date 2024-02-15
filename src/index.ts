@@ -1,17 +1,19 @@
 import mongoose from "mongoose";
 import express from 'express'
-import dotenv from 'dotenv'
-import * as process from "process";
+import  process from "process";
 
-dotenv.config()
+const dotenv=require('dotenv')
+dotenv.config({ path: 'src/.env' });
+
+
 const app=express();
 
-const port=process.env.SERVER_PORT
+const port=process.env.SERVER || 8080
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/doctor_appointment').then(()=>{
-    app.listen(8080,()=>{
-        console.log("serve running")
-        console.log(port)
+    app.listen(port,()=>{
+        console.log(`serve running ${port}`)
+
     })
 })
