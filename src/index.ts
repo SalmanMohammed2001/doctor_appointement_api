@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import express from 'express'
 import  process from "process";
 import bodyParser from "body-parser";
+import userRoute from './routes/User'
 
 var cookieParser = require('cookie-parser')
 const cors = require('cors')
@@ -28,5 +29,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/doctor_appointment').then(()=>{
 
 const authRoute=require('./routes/Auth')
 
+
 app.use("/api/v1/auth",authRoute)
+app.use("/api/v1/users",userRoute)
 
