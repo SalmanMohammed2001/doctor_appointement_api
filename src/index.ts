@@ -12,13 +12,10 @@ const app=express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 // app.use(cors())
-app.use(cookieParse)
+// app.use(cookieParse)
 
 
-
-const port=process.env.SERVER || 8080
-
-
+let port=process.env.SERVER || 8080
 
 mongoose.connect('mongodb://127.0.0.1:27017/doctor_appointment').then(()=>{
     app.listen(port,()=>{
@@ -28,8 +25,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/doctor_appointment').then(()=>{
 })
 
 
+const authRoute=require('./routes/Auth')
 
+app.use("/api/v1/auth",authRoute)
 
-const  authRoute=require('./routes/Auth')
-
-app.use("/api/v1/auth/",authRoute)
