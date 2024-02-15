@@ -104,12 +104,11 @@ const generateToken=(user:any)=>{
    const token=generateToken(user)
 
 
-
    // @ts-ignore
    const{password,role,appointments,...rest}=user._doc
 
 
-
+    res.setHeader("Authorization",`Bearer ${token}`)
     res.status(200).json({status:true,message:"Successful login",token,data:rest,role})
 
 

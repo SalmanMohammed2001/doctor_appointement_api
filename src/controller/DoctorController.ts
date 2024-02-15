@@ -62,19 +62,28 @@ import DoctorSchema from "../models/DoctorSchema";
      }
 
  }
- export  const getAllDoctor=(req:any,res:any)=>{
+ export  const getAllDoctor= async (req:any,res:any)=>{
 
 
 
      try{
 
-         DoctorSchema.find().select('-password').then((result)=>{
-             if(result){
-                 res.status(200).json({success:true,message:"Successfully getAll User",data:result})
-             }else {
-                 res.status(500).json({status:false,message:'Try again getAll fail ' })
-             }
-         })
+         const {query}=req.query
+         let doctors;
+
+         if(query){
+             doctors=await DoctorSchema.find({"isApproved":"approved", $or:[{name:{$regex:query,$options:"i"}},
+                     {specialization:{$regex:query,$options:"i"}},
+                 ]
+             }).select('-password');
+         }else {
+             doctors =await DoctorSchema.find({"isApproved":"approved"}).select('-password')
+         }
+
+
+                 res.status(200).json({success:true,message:"Successfully getAll User",data:doctors})
+
+
 
 
      }catch (error){
