@@ -11,8 +11,8 @@ dotenv.config({ path: 'src/.env' });
 const app=express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-/*app.use(cors())
-app.use(cookieParse)*/
+// app.use(cors())
+app.use(cookieParse)
 
 
 
@@ -29,6 +29,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/doctor_appointment').then(()=>{
 
 
 
-app.get('/user',(req,res)=>{
-    res.send("api word ")
-})
+
+const  authRoute=require('./routes/Auth')
+
+app.use("/api/v1/auth/",authRoute)
