@@ -14,7 +14,7 @@ const generateToken=(user:any)=>{
 }
 
  export const register=async (req:any,res:any)=>{
-  console.log(req.body)
+  // console.log(req.body)
 
   const{email,password,name,role,photo,gender}=req.body
 
@@ -26,7 +26,7 @@ const generateToken=(user:any)=>{
    }
 
    if(role==="doctor"){
-    user= await  User.findOne({email: email})
+    user= await  Doctor.findOne({email: email})
    }
     //check if user exist
    if(user){
@@ -48,10 +48,11 @@ const generateToken=(user:any)=>{
     })
    }
    if(role==="doctor"){
+    console.log('salman')
     user=new Doctor({
      name,
      email,
-     hashPassword:hashPassword,
+     password:hashPassword,
      photo,
      gender,
      role
