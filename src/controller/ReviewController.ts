@@ -18,10 +18,12 @@ export const createReview =async (req:any,res:any)=>{
 
     if(!req.body.doctor){
         req.body.doctor=req.params.doctorId
+        console.log(req.body.doctor)
     }
 
     if(!req.body.user){
-        req.body.user=req.params.userId
+        req.body.user=req.userId
+        console.log(req.body.user)
     }
 
     try{

@@ -4,6 +4,7 @@ import  process from "process";
 import bodyParser from "body-parser";
 import userRoute from './routes/User'
 import doctorRoute from './routes/Doctor'
+import reviewRoute from './routes/Review'
 
 var cookieParser = require('cookie-parser')
 const cors = require('cors')
@@ -34,4 +35,6 @@ const authRoute=require('./routes/Auth')
 app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/users",userRoute)
 app.use("/api/v1/doctors",doctorRoute)
+app.use("/api/v1/review",reviewRoute)
+
 

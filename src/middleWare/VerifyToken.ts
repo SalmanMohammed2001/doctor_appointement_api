@@ -14,7 +14,7 @@ export  const authenticate= async (req:any,res:any,next:any)=>{
     try {
         const token=authToken.split(" ")[1]
         const decodedData=jwt.verify(token,process.env.JWT_SERCET_KEY)
-        req.userId=decodedData.id
+       req.userId=decodedData.id
         req.role=decodedData.role
         next()
     }catch (error){

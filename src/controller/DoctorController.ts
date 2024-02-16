@@ -48,7 +48,7 @@ import DoctorSchema from "../models/DoctorSchema";
 
      try{
 
-         DoctorSchema.findById({'_id':id}).select('-password').then((result)=>{
+         DoctorSchema.findById({'_id':id}).populate("reviews").select('-password').then((result)=>{
              if(result){
                  res.status(200).json({success:true,message:"Successfully get User",data:result})
              }else {
