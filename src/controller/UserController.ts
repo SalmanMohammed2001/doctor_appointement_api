@@ -1,5 +1,8 @@
 
  import UserSchema from "../models/UserSchema";
+ import userSchema from "../models/UserSchema";
+ import BookingSchema from "../models/BookingSchema";
+ import DoctorSchema from "../models/DoctorSchema";
 
  export  const updateUser=(req:any,res:any)=>{
 
@@ -81,4 +84,47 @@
          res.status(500).json({success:false,message:"Internal server error"})
      }
 
+ }
+
+ export const getUserProfile=async (req:any,res:any)=>{
+     const userId=req.userId
+
+     try{
+        const  user= await userSchema.findById(userId);
+        if(!user){
+            res.status(404).json({status:false,message:'user not found ' })
+        }
+
+        // @ts-ignore
+         const {password,...rest}=user._doc
+
+         res.status(200).json({success:true,message:"profile info getting",data:{...rest}})
+     }catch (error){
+         res.status(500).json({success:false,message:"Internal server error"})
+     }
+
+ }
+
+ export const  getMyAppointment=async (req:any,res:any)=>{
+
+
+     try{
+
+     //step 1 :retrieve   appointment from booking for specific  user
+     const booking= await  BookingSchema.find({user:req.userId})
+
+     //step 2 :retrieve   extract doctor from appointment booking
+     // @ts-ignore
+     const  doctorIds=  booking.map(el=>el.doctor.id)
+
+
+     //step 3 :retrieve   doctors  using doctor ids
+     const  doctors= await DoctorSchema.find({_id:{$in:doctorIds}}).select('-password')
+
+     res.status(200).json({success:true,message:"Appointments are getting",data:doctors})
+
+     }catch (error) {
+         res.status(500).json({success: false, message: "Internal server error"})
+
+     }
  }
