@@ -1,5 +1,7 @@
 
 import DoctorSchema from "../models/DoctorSchema";
+import userSchema from "../models/UserSchema";
+import BookingSchema from "../models/BookingSchema";
 
  export  const updateDoctor=(req:any,res:any)=>{
 
@@ -91,3 +93,23 @@ import DoctorSchema from "../models/DoctorSchema";
      }
 
  }
+
+export const geDoctorProfile=async (req:any,res:any)=>{
+    const doctorId=req.userId
+
+    try{
+        const  doctor= await DoctorSchema.findById(doctorId);
+        if(!doctor){
+            res.status(404).json({status:false,message:'doctor not found ' })
+        }
+
+        // @ts-ignore
+        const {password,...rest}=doctor._doc
+        const appointment=await  BookingSchema.find({doctor:doctorId})
+
+        res.status(200).json({success:true,message:"profile info getting",data:{...rest,appointment}})
+    }catch (error){
+        res.status(500).json({success:false,message:"Internal server error"})
+    }
+
+}
