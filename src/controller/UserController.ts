@@ -6,7 +6,8 @@
 
  export  const updateUser=(req:any,res:any)=>{
 
-    const id=req.params.id
+     console.log(req.body)
+  const id=req.params.id
 
     try{
 
@@ -86,11 +87,12 @@
 
  }
 
+
  export const getUserProfile=async (req:any,res:any)=>{
      const userId=req.userId
 
      try{
-        const  user= await userSchema.findById(userId);
+        const  user= await userSchema.findById({'_id':userId});
         if(!user){
             res.status(404).json({status:false,message:'user not found ' })
         }
@@ -106,7 +108,6 @@
  }
 
  export const  getMyAppointment=async (req:any,res:any)=>{
-
 
      try{
 

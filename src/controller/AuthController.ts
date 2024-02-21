@@ -14,7 +14,9 @@ const generateToken=(user:any)=>{
 }
 
  export const register=async (req:any,res:any)=>{
-  // console.log(req.body)
+   console.log(req.body)
+
+
 
   const{email,password,name,role,photo,gender}=req.body
 
@@ -69,6 +71,8 @@ const generateToken=(user:any)=>{
   }catch (error){
    res.status(500).json({success:false,message:"Internal server error"})
   }
+
+
 
  }
 
